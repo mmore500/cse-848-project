@@ -26,7 +26,7 @@ stats.register("min_useful", lambda x: np.min([t[1] for t in x]))
 stats.register("max_novelty", lambda x: np.max([t[0] for t in x]))
 stats.register("max_useful", lambda x: np.max([t[1] for t in x]))
 
-def evolve_map(pop, NGEN, toolbox, logbook, hof):
+def evolve_map(pop, NGEN, toolbox, logbook, hof, startiter):
 
 
     CXPB, MUTPB = 0.5, 0.2
@@ -65,4 +65,4 @@ def evolve_map(pop, NGEN, toolbox, logbook, hof):
         # Record data
         hof.update(pop)
         record = stats.compile(pop)
-        logbook.record(gen=g, **record)
+        logbook.record(gen=g+startiter, **record)

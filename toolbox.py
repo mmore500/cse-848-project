@@ -12,6 +12,7 @@ import math
 from evaluate_map import evaluate_map
 from evaluate_val import evaluate_val
 from mutate_map import mutate_map
+from mutate_val import mutate_val
 
 
 def toolbox(nleg):
@@ -19,7 +20,8 @@ def toolbox(nleg):
         toolbox = base.Toolbox()
 
         # IndividualMap
-        creator.create("FitnessMap", base.Fitness, weights=(100000.0, 0.000001))
+                                                            #novelty,  useful
+        creator.create("FitnessMap", base.Fitness, weights=(3.0, 1.0))
         creator.create("IndividualMap", list, fitness=creator.FitnessMap, val=None, tb=toolbox)
 
         def int2map(val):
@@ -40,7 +42,7 @@ def toolbox(nleg):
         toolbox.register("population_map", tools.initRepeat, list, toolbox.individual_map)
 
         toolbox.register("mate_map", tools.cxTwoPoint)
-        toolbox.register("mutate_map", mutate_map)
+        toolbox.register("mutate_map", tools.mutShuffleIndexes, indpb=0.05)
         toolbox.register("select_map", tools.selTournament, tournsize=5)
         toolbox.register("evaluate_map", evaluate_map)
 
@@ -67,12 +69,7 @@ def toolbox(nleg):
 
 
         toolbox.register("mate_val", tools.cxTwoPoint)
-        toolbox.register("mutate_val",
-                tools.mutUniformInt,
-                low=0,
-                up=1,
-                indpb=0.2
-            )
+        toolbox.register("mutate_val", mutate_val)
         toolbox.register("select_val", tools.selTournament, tournsize=5)
         toolbox.register("evaluate_val", evaluate_val)
 

@@ -23,9 +23,9 @@ stats.register("min", np.min)
 stats.register("max", np.max)
 
 
-def evolve_val(pop, NGEN, toolbox, logbook, hof):
+def evolve_val(pop, NGEN, toolbox, logbook, hof, startiter):
 
-    CXPB, MUTPB = 0.5, 0.2
+    CXPB, MUTPB = 0.0, 0.2
     # Evaluate the entire population
     fitnesses = map(toolbox.evaluate_val, pop)
     for ind, fit in zip(pop, fitnesses):
@@ -61,4 +61,4 @@ def evolve_val(pop, NGEN, toolbox, logbook, hof):
         # Record data
         hof.update(pop)
         record = stats.compile(pop)
-        logbook.record(gen=g, **record)
+        logbook.record(gen=g+startiter, **record)

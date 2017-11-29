@@ -17,9 +17,10 @@ from toolbox import toolbox as tb
 from evolve_val import evolve_val
 from evolve_map import evolve_map
 
-popsize = 300
-nleg = 10
-ngen_stint = 50
+popsize = 30
+nleg = 12
+ngen_stint = 20
+nstint = 20
 
 def popval2popmap(pop):
     newpop = list()
@@ -57,13 +58,22 @@ def evolve():
     for m,v in zip(pop_map, pop_val):
         v.map = m
 
+    startiter = 0
+
     pop = pop_val
-    evolve_val(pop, ngen_stint, toolbox, logbook_val, hof_val)
+    evolve_val(pop, ngen_stint, toolbox, logbook_val, hof_val, startiter)
+    startiter += ngen_stint
 
-    pop = popval2popmap(pop)
-    evolve_map(pop, ngen_stint, toolbox, logbook_map, hof_map)
+    for s in tqdm(range(nstint)):
+        pop = popval2popmap(pop)
+        evolve_map(pop, ngen_stint, toolbox, logbook_map, hof_map, startiter)
+        startiter += ngen_stint
 
-    pop = popmap2popval(pop)
-    evolve_val(pop, ngen_stint, toolbox, logbook_val, hof_val)
+        pop = popmap2popval(pop)
+        evolve_val(pop, ngen_stint, toolbox, logbook_val, hof_val, startiter)
+        startiter += ngen_stint
 
-    return ((logbook_val, hof_val), (logbook_map, logbook_map))
+    pop_val = pop
+    pop_map = popval2popmap(pop)
+
+    return ((logbook_val, hof_val, pop_val), (logbook_map, logbook_map, pop_map))

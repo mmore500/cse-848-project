@@ -16,4 +16,4 @@ def evaluate_valmap(val, mapp):
     return evaluate_phen(phen)
 
 def evaluate_phen(phen):
-    return -np.std(phen)
+    return - abs(5 - abs(np.sum(phen) - 6))

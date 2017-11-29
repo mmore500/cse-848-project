@@ -14,7 +14,7 @@ import random
 import math
 
 from evolve import evolve
-
+from evaluate_val import val2phen
 import sys
 
 # # check for proper usage
@@ -25,7 +25,15 @@ import sys
 # n = int(sys.argv[1])
 
 # run evolution process
-((logbook_val, hof_val), (logbook_map, logbook_map)) = evolve()
+((logbook_val, hof_val, pop_val), (logbook_map, logbook_map, pop_map)) = evolve()
+
+# print(pop_map)
+# print(pop_val)
+tups = zip(pop_map, pop_val)
+phens = [val2phen(v, m) for m, v in tups]
+print(phens)
+
+
 
 # graph map fitness vs generations
 gen = logbook_map.select("gen")

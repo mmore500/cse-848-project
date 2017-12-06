@@ -1,4 +1,10 @@
-# CSE 848 Project
+# CSE 848 Project --- Abandoned Branch
+
+This branch is work to evolve an encoding for the discrete `n-legs` problem.
+The approach follows the project proposal more closely.
+It was abandoned for the current master branch, which has a completely separate git history.
+This code is squirreled away as an orphan branch for safekeeping.
+
 
 ## Credits
 

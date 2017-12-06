@@ -33,5 +33,5 @@ for __ in range(3):
 
 import json
 
-with open('data/noise_nf.json', 'w') as outfile:
+with open('data/noise_target_nf.json', 'w') as outfile:
     json.dump(lbs, outfile)

@@ -9,7 +9,7 @@ def load():
     batch_size = 16
 
     train_loader = torch.utils.data.DataLoader(
-            torch.load('../data/traindata.pt')/1000,
+            torch.load('data/traindata.pt')/1000,
             batch_size=batch_size,
             shuffle=True
         )

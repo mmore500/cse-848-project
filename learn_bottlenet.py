@@ -12,15 +12,16 @@ import numpy as np
 import matplotlib
 import matplotlib.pyplot as plt
 
-from Network import Network
+from BottleNet import BottleNet
 
-from load import load
+from learn.load import load
+from learn.train import train
 
 train_loader = load()
 
 # Initialize Model
 
-model = Network()
+model = BottleNet()
 criterion = nn.MSELoss()
 
 # setup optimization routine
@@ -32,31 +33,6 @@ optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
 # Training Function
 
 log_interval = 1024
-def train(epoch):
-    model.train()
-    total_loss = 0
-
-    for batch_idx, data in enumerate(train_loader):
-
-        data, target = Variable(data).float(), Variable(data).float()
-
-        # make sure gradients are reset to zero.
-        optimizer.zero_grad()
-        output = model(data)
-
-        loss = criterion(output, target)
-
-        cur_loss = loss.data[0]
-        total_loss += cur_loss
-
-        loss.backward()
-        optimizer.step()
-
-        if batch_idx % log_interval == 0:
-            print('Train Epoch: {} [{}/{} ({:.0f}%)]\tLoss: {:.6f}'.format(
-                epoch, batch_idx * len(data), len(train_loader.dataset),
-                100. * batch_idx / len(train_loader), cur_loss))
-
 # Actual Loop
 
 nepochs = 1000
@@ -72,7 +48,7 @@ print(loss.data.numpy())
 
 try:
     for epoch in range(nepochs):
-        train(epoch)
+        train(epoch, train_loader, model, optimizer, criterion, log_interval)
 except KeyboardInterrupt:
     pass
 
@@ -87,4 +63,4 @@ output = model.forwardverbose(data)
 
 print(model.forwardtimes(data).data.numpy())
 
-torch.save(model, "../data/model.pt")
+torch.save(model, "data/bottle_model.pt")

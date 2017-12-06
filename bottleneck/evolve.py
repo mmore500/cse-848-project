@@ -12,7 +12,7 @@ import random
 import math
 
 from bottleneck.toolbox import toolbox as tb
-from Network import Network
+from BottleNet import BottleNet
 
 import sys
 print(sys.path)
@@ -34,7 +34,7 @@ stats.register("max", np.max)
 
 def evolve():
 
-    mapmodel = torch.load("data/model.pt")
+    mapmodel = torch.load("data/bottle_model.pt")
 
     toolbox = tb(maplen, mapmodel)
 

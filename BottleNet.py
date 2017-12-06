@@ -4,11 +4,11 @@ import torchvision
 import torch.nn as nn
 
 
-# Define the CNN architecture (LeNet)
+# Define the bottlenecked autoencoder architecture
 
-class Network(nn.Module):
+class BottleNet(nn.Module):
     def __init__(self):
-        super(Network, self).__init__()
+        super(BottleNet, self).__init__()
         self.fc1   = nn.Linear(100, 1)
         self.fc2   = nn.Linear(1, 100)
 

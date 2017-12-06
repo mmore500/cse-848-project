@@ -6,20 +6,15 @@ from deap import base
 from deap import creator
 from deap import tools
 
-from pandas import DataFrame
-
 import matplotlib.pyplot as plt
 
 import random
 import math
 
-from toolbox_indirect import toolbox_indirect as tb
-from Network import Network
-
-import torch
+from direct.toolbox import toolbox as tb
 
 popsize = 300
-maplen = 1
+nleg = 100
 NGEN = 50
 
 
@@ -31,21 +26,18 @@ stats.register("min", np.min)
 stats.register("max", np.max)
 
 
-def evolve_indirect():
+def evolve():
 
-    mapmodel = torch.load("../data/model.pt")
-
-    toolbox = tb(maplen, mapmodel)
+    toolbox = tb(nleg)
 
     pop = toolbox.population_val(n=popsize)
     logbook_val = tools.Logbook()
     hof_val = tools.HallOfFame(1)
 
-    print(pop)
 
     startiter = 0
 
-    CXPB, MUTPB = 0, 0.2
+    CXPB, MUTPB = 0.5, 0.2
     # Evaluate the entire population
     fitnesses = map(toolbox.evaluate_val, pop)
     for ind, fit in zip(pop, fitnesses):
@@ -83,4 +75,4 @@ def evolve_indirect():
         record = stats.compile(pop)
         logbook_val.record(gen=g+startiter, **record)
 
-    return logbook_val, hof_val, pop, mapmodel, toolbox
+    return logbook_val, hof_val, pop, toolbox

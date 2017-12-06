@@ -6,17 +6,21 @@ from deap import base
 from deap import creator
 from deap import tools
 
-from pandas import DataFrame
-
 import matplotlib.pyplot as plt
 
 import random
 import math
 
-from toolbox import toolbox as tb
+from bottleneck.toolbox import toolbox as tb
+from Network import Network
+
+import sys
+print(sys.path)
+
+import torch
 
 popsize = 300
-nleg = 100
+maplen = 1
 NGEN = 50
 
 
@@ -30,16 +34,19 @@ stats.register("max", np.max)
 
 def evolve():
 
-    toolbox = tb(nleg)
+    mapmodel = torch.load("data/model.pt")
+
+    toolbox = tb(maplen, mapmodel)
 
     pop = toolbox.population_val(n=popsize)
     logbook_val = tools.Logbook()
     hof_val = tools.HallOfFame(1)
 
+    print(pop)
 
     startiter = 0
 
-    CXPB, MUTPB = 0.5, 0.2
+    CXPB, MUTPB = 0, 0.2
     # Evaluate the entire population
     fitnesses = map(toolbox.evaluate_val, pop)
     for ind, fit in zip(pop, fitnesses):
@@ -77,4 +84,4 @@ def evolve():
         record = stats.compile(pop)
         logbook_val.record(gen=g+startiter, **record)
 
-    return logbook_val, hof_val, pop, toolbox
+    return logbook_val, hof_val, pop, mapmodel, toolbox

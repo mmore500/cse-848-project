@@ -6,15 +6,13 @@ from deap import base
 from deap import creator
 from deap import tools
 
-from pandas import DataFrame
-
 import matplotlib.pyplot as plt
 
 import random
 import math
 
-from evolve import evolve
-from evaluate_val import evaluate_val
+from direct.evolve import evolve
+from direct.evaluate_val import evaluate_val
 import sys
 
 sub_novelties = list()

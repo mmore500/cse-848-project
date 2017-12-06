@@ -6,15 +6,13 @@ from deap import base
 from deap import creator
 from deap import tools
 
-from pandas import DataFrame
-
 import matplotlib.pyplot as plt
 
 import random
 import math
 
-from evolve_indirect import evolve_indirect
-from evaluate_val import indirectphen, evaluate_indirect
+from bottleneck.evolve import evolve
+from bottleneck.evaluate_val import indirectphen, evaluate_indirect
 import sys
 
 # # check for proper usage
@@ -29,7 +27,7 @@ sub_fits = list()
 
 for __ in range(40):
 
-    lb, hof, pop, mapmodel, tb = evolve_indirect()
+    lb, hof, pop, mapmodel, tb = evolve()
 
     domphen = indirectphen(hof[0], mapmodel)
 
@@ -44,5 +42,5 @@ for __ in range(40):
 
 import json
 
-with open('../data/indirect_nf.json', 'w') as outfile:
+with open('data/indirect_nf.json', 'w') as outfile:
     json.dump(list(zip(sub_novelties, sub_fits)), outfile)

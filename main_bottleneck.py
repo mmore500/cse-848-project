@@ -42,5 +42,5 @@ for __ in range(40):
 
 import json
 
-with open('data/indirect_nf.json', 'w') as outfile:
+with open('data/bottleneck_nf.json', 'w') as outfile:
     json.dump(list(zip(sub_novelties, sub_fits)), outfile)

@@ -31,6 +31,20 @@ def plot_es(dat, title, vmax):
     axes.set_xlim([-1,0])
     axes.set_ylim([-3000,0])
     plt.show()
+
+    fig = plt.figure()
+    fig.suptitle(title, fontsize=14)
+    plt.subplots_adjust(top=.92)
+    hexbins = plt.hexbin(np.array([x[1] for x in dat]), -np.array([x[0] for x in dat]), gridsize=20, cmap=plt.cm.Blues, norm=colors.LogNorm(vmin=None,vmax=vmax))
+    bincounts = hexbins.get_array()
+    plt.xlabel("Fitness")
+    plt.ylabel("Novelty")
+    cb = fig.colorbar(hexbins)
+    cb.set_label('$\log_{10}(N)$')
+    axes = plt.gca()
+    axes.set_xlim([-2,0])
+    axes.set_ylim([-2,0])
+    plt.show()
     return bincounts
 
 directdat = json.load(open('data/direct_nf.json'))

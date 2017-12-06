@@ -1,6 +1,6 @@
 from torch.autograd import Variable
 
-def train(epoch, train_loader, model, optimizer, criterion, log_interval):
+def train(epoch, train_loader, model, optimizer, criterion, log_interval, noise=False):
     model.train()
     total_loss = 0
 
@@ -10,7 +10,11 @@ def train(epoch, train_loader, model, optimizer, criterion, log_interval):
 
         # make sure gradients are reset to zero.
         optimizer.zero_grad()
-        output = model(data)
+
+        if noise:
+            output =  model(data + Variable(torch.randn(data.size()) * 1))
+        else:
+            output = model(data)
 
         loss = criterion(output, target)
 

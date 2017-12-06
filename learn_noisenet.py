@@ -14,28 +14,30 @@ import matplotlib.pyplot as plt
 
 from NoiseNet import NoiseNet
 
-from learn.load import load
+from learn.load import load_noise as load
 from learn.train import train
+
+from torch.nn.init import uniform
 
 train_loader = load()
 
 # Initialize Model
 
 model = NoiseNet()
+uniform(model.fc1.weight.data, a = 0.005, b = 0.015)
 criterion = nn.MSELoss()
 
 # setup optimization routine
-learning_rate = 1e-3
-momentum = 0.7
-optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=momentum)
+learning_rate = 1e-4
+optimizer = optim.SGD(model.parameters(), lr=learning_rate, momentum=0.9)
 
 
 # Training Function
 
-log_interval = 1024
+log_interval = 2048
 # Actual Loop
 
-nepochs = 1000
+nepochs = 80000
 
 data = next(enumerate(train_loader))[1]
 
@@ -48,7 +50,7 @@ print(loss.data.numpy())
 
 try:
     for epoch in range(nepochs):
-        train(epoch, train_loader, model, optimizer, criterion, log_interval)
+        train(epoch, train_loader, model, optimizer, criterion, log_interval, noise=True)
 except KeyboardInterrupt:
     pass
 

@@ -15,3 +15,14 @@ def load():
         )
 
     return train_loader
+
+def load_noise():
+    batch_size = 2048
+
+    train_loader = torch.utils.data.DataLoader(
+            torch.load('data/traindata.pt')/1000,
+            batch_size=batch_size,
+            shuffle=True
+        )
+
+    return train_loader

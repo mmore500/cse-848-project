@@ -36,7 +36,7 @@ def plot_es(dat, title, vmax):
 directdat = json.load(open('data/direct_nf.json'))
 bottleneckdat = json.load(open('data/bottleneck_nf.json'))
 noisedat = json.load(open('data/noise_nf.json'))
-bottle_severe_neckdat = json.load(open('data/bottleneck_severe_nf.json'))
+bottle_severe_neckdat = json.load(open('data/direct_severe_nf.json'))
 noise_severe_dat = json.load(open('data/noise_severe_nf.json'))
 
 vmax1 = np.max(plot_es(directdat, "foobar", 10000))
@@ -53,6 +53,6 @@ plot_es(bottleneckdat, "Bottleneck Encoding Evolvability Signature", vmax)
 
 plot_es(noisedat, "Denoising Encoding Evolvability Signature", vmax)
 
-plot_es(bottleneck_severe_dat, "Bottleneck Encoding Severe Evolvability Signature", vmax)
+plot_es(direct_severe_dat, "Bottleneck Encoding Severe Evolvability Signature", vmax)
 
 plot_es(noise_severe_dat, "Denoising Encoding Severe Evolvability Signature", vmax)

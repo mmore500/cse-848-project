@@ -46,6 +46,7 @@ def evolve():
 
     startiter = 0
 
+    # crossover doesn't make sense because there's just one value
     CXPB, MUTPB = 0, 0.2
     # Evaluate the entire population
     fitnesses = map(toolbox.evaluate_val, pop)

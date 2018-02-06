@@ -1,3 +1,6 @@
+import seaborn as sns
+import pandas as pd
+
 import matplotlib.pyplot as plt
 
 import matplotlib.colors as colors
@@ -5,6 +8,7 @@ import matplotlib.colors as colors
 import numpy as np
 
 import json
+
 
 def plot_history(seqs, title):
     fig = plt.figure()
@@ -25,54 +29,27 @@ def plot_history(seqs, title):
 
     plt.show()
 
-def plot_history_combined(direct_seqs, bottleneck_seqs, noise_seqs, title):
+def makedf(dat, encoding):
+    return pd.DataFrame.from_records([{
+            'Generation' : g,
+            'Table Height' : val,
+            'Encoding' : encoding,
+            'rep' : i
+            } for i, seq in enumerate(dat) for g, val in enumerate(seq)])
 
-    fig = plt.figure()
-    ax = plt.subplot(111)
+def plot_history_combined(direct_seqs, bottleneck_seqs, denoising_seqs, title):
 
-    fig.suptitle(title, fontsize=14)
+    sns.set()
 
-    direct_x = range(len(direct_seqs[0]))
-    direct_y = [np.mean(tup) for tup in zip(*direct_seqs)]
+    ax = sns.tsplot(data=makedf(direct_seqs, "Direct"), time='Generation', unit='rep', value='Table Height', condition='Encoding', ci=95, linestyle='-.')
 
-    # example variable error bar values
-    direct_yerr = [np.std(tup) if i % 1000 == 0 else 0 for (i, tup) in enumerate(zip(*direct_seqs))]
+    ax = sns.tsplot(data=makedf(bottleneck_seqs, "Bottleneck"), time='Generation', unit='rep', value='Table Height', condition='Encoding', ci=95, linestyle='-', color=sns.color_palette()[1])
 
-    # First illustrate basic pyplot interface, using defaults where possible.
-    direct_graphic = plt.errorbar(direct_x, direct_y, yerr=direct_yerr, label="Direct")
+    ax = sns.tsplot(data=makedf(denoising_seqs, "Denoising"), time='Generation', unit='rep', value='Table Height', condition='Encoding', ci=95, linestyle=':', color=sns.color_palette()[2])
 
-
-    bottleneck_x = range(len(bottleneck_seqs[0]))
-    bottleneck_y = [np.mean(tup) for tup in zip(*bottleneck_seqs)]
-
-    # example variable error bar values
-    bottleneck_yerr = [np.std(tup) if i % 1000 == 0 else 0 for (i, tup) in enumerate(zip(*bottleneck_seqs))]
-
-    # First illustrate basic pyplot interface, using defaults where possible.
-    bottleneck_graphic = plt.errorbar(bottleneck_x, bottleneck_y, yerr=bottleneck_yerr, label="Bottleneck")
-
-
-    noise_x = range(len(noise_seqs[0]))
-    noise_y = [np.mean(tup) for tup in zip(*noise_seqs)]
-
-    # example variable error bar values
-    noise_yerr = [np.std(tup) if i % 1000 == 0 else 0 for (i, tup) in enumerate(zip(*noise_seqs))]
-
-    # First illustrate basic pyplot interface, using defaults where possible.
-    noise_graphic = plt.errorbar(noise_x, noise_y, yerr=noise_yerr, label="Denoising")
-
-
-    plt.xlabel("Generation")
-    plt.ylabel("Mean of Population Mean Leg Height")
-
-    box = ax.get_position()
-    ax.set_position([box.x0, box.y0, box.width * 0.8, box.height])
-
-
-    plt.legend(handles=[direct_graphic, bottleneck_graphic, noise_graphic], loc='center left', bbox_to_anchor=(1, 0.5))
+    plt.title(title)
 
     plt.show()
-
 
 def extract(lbs):
     return [[entry['avg'] for entry in lb] for lb in lbs]

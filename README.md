@@ -1,5 +1,7 @@
 # CSE 848 Project
 
+Experiments using autoencoders to learn evolvable encodings for the *n*-legged table problem.
+
 ## *Learning an Evolvable Genotype-Phenotype Map*
 
 Experiments reported in this paper employed    [v2.0.0](https://github.com/mmore500/cse-848-project/tree/v2.0.0) of this software.

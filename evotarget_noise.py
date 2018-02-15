@@ -14,13 +14,6 @@ import math
 from noise.evolve import evolve_target
 import sys
 
-# # check for proper usage
-# if len(sys.argv) != 2:
-#     print("Usage: python3 main.py [soduku-n]")
-#     sys.exit(0)
-#
-# n = int(sys.argv[1])
-
 lbs = list()
 
 for __ in range(3):

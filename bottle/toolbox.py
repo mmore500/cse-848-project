@@ -9,7 +9,7 @@ from deap import tools
 import random
 import math
 
-from bottleneck.evaluate_val import evaluate_indirect, evaluate_indirect_target
+from bottle.evaluate_val import evaluate_indirect, evaluate_indirect_target
 
 
 def toolbox(maplen, mapmodel, target=False):

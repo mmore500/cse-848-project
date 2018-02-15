@@ -11,8 +11,8 @@ import matplotlib.pyplot as plt
 import random
 import math
 
-from bottleneck.toolbox import toolbox as tb
-from bottleneck.evaluate_val import indirectphen
+from bottle.toolbox import toolbox as tb
+from bottle.evaluate_val import indirectphen
 from BottleNet import BottleNet
 
 import sys

@@ -11,8 +11,8 @@ import matplotlib.pyplot as plt
 import random
 import math
 
-from bottleneck.evolve import evolve
-from bottleneck.evaluate_val import indirectphen, evaluate_indirect
+from bottle.evolve import evolve
+from bottle.evaluate_val import indirectphen, evaluate_indirect
 import sys
 
 # # check for proper usage

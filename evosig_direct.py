@@ -18,19 +18,25 @@ import sys
 sub_novelties = list()
 sub_fits = list()
 
-for __ in range(40):
+domphen_fits = list()
+
+for __ in range(20):
     lb, hof, pop, tb = evolve()
 
     domphen = hof[0]
 
-    subjects = [tb.clone(hof[0]) for __ in range(10000)]
+    domphen_fit = float(evaluate_val(domphen)[0])
+
+    domphen_fits.append(domphen_fit)
+
+    subjects = [tb.clone(hof[0]) for __ in range(1000)]
     for s in subjects: tb.mutate_val(s)
 
     sub_phens = subjects
 
     sub_novelties += [float(np.linalg.norm(np.array(sp) - np.array(domphen))) for sp in sub_phens]
 
-    sub_fits += [float(evaluate_val(s)[0]) for s in subjects]
+    sub_fits += [float(evaluate_val(s)[0]) - domphen_fit for s in subjects]
 
 
 import json

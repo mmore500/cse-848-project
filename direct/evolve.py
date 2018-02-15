@@ -15,7 +15,7 @@ from direct.toolbox import toolbox as tb
 
 popsize = 300
 nleg = 100
-NGEN = 50
+NGEN = 250
 
 
 # statistics

@@ -22,7 +22,7 @@ import torch
 
 popsize = 300
 maplen = 1
-NGEN = 50
+NGEN = 250
 
 
 # statistics

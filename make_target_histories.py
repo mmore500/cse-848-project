@@ -41,11 +41,11 @@ def plot_history_combined(direct_seqs, bottleneck_seqs, denoising_seqs, title):
 
     sns.set()
 
-    ax = sns.tsplot(data=makedf(direct_seqs, "Direct"), time='Generation', unit='rep', value='Table Height', condition='Encoding', ci=95, linestyle='-.')
+    ax = sns.tsplot(data=makedf(denoising_seqs, "Denoiser"), time='Generation', unit='rep', value='Table Height', condition='Encoding', ci=95, linestyle='-', color=sns.color_palette()[0])
 
-    ax = sns.tsplot(data=makedf(bottleneck_seqs, "Bottleneck"), time='Generation', unit='rep', value='Table Height', condition='Encoding', ci=95, linestyle='-', color=sns.color_palette()[1])
+    ax = sns.tsplot(data=makedf(bottleneck_seqs, "Bottleneck"), time='Generation', unit='rep', value='Table Height', condition='Encoding', ci=95, linestyle=':', color=sns.color_palette()[2])
 
-    ax = sns.tsplot(data=makedf(denoising_seqs, "Denoising"), time='Generation', unit='rep', value='Table Height', condition='Encoding', ci=95, linestyle=':', color=sns.color_palette()[2])
+    ax = sns.tsplot(data=makedf(direct_seqs, "Direct"), time='Generation', unit='rep', value='Table Height', condition='Encoding', ci=95, linestyle='--', color=sns.color_palette()[1])
 
     plt.title(title)
 
